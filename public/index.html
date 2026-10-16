@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#263746">
+    <title>Service requests</title>
+    <link rel="stylesheet" href="site.css">
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="/">
+          <span class="brand-mark" aria-hidden="true">SR</span>
+          <span>Service Request Manager</span>
+        </a>
+        <div class="header-details">
+          <a href="/api">API info</a>
+          <span id="todayLabel"></span>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <section class="page-heading" aria-labelledby="pageTitle">
+        <div>
+          <h1 id="pageTitle">Service requests</h1>
+          <p class="page-description">Create and manage support requests.</p>
+        </div>
+        <button class="button button-primary" id="newRequestButton" type="button">New request</button>
+      </section>
+
+      <section class="summary-strip" aria-label="Request totals">
+        <div class="summary-item"><span>All requests</span><strong id="totalCount">0</strong></div>
+        <div class="summary-item"><span>Open</span><strong id="openCount">0</strong></div>
+        <div class="summary-item"><span>In progress</span><strong id="progressCount">0</strong></div>
+        <div class="summary-item"><span>Resolved</span><strong id="resolvedCount">0</strong></div>
+      </section>
+
+      <section class="request-section" aria-labelledby="listTitle">
+        <div class="list-heading">
+          <h2 id="listTitle">Request list</h2>
+          <div class="list-tools">
+            <label class="search-field">
+              <span class="visually-hidden">Search requests</span>
+              <input id="searchInput" type="search" placeholder="Search requests" autocomplete="off">
+            </label>
+            <label class="filter-field">
+              <span class="visually-hidden">Filter by status</span>
+              <select id="statusFilter">
+                <option value="All">All statuses</option>
+                <option value="Open">Open</option>
+                <option value="In Progress">In progress</option>
+                <option value="Resolved">Resolved</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Request</th>
+                <th scope="col">Requester</th>
+                <th scope="col">Priority</th>
+                <th scope="col">Status</th>
+                <th scope="col">Created</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="requestRows">
+              <tr><td class="table-message" colspan="6">Loading requests…</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="empty-state" id="emptyState" hidden>
+          <h3 id="emptyTitle">No requests yet</h3>
+          <p id="emptyMessage">Use New request to add the first one.</p>
+          <button class="button button-secondary" id="emptyCreateButton" type="button">New request</button>
+        </div>
+        <p class="list-footer" id="listFooter">Showing 0 requests</p>
+      </section>
+    </main>
+
+    <dialog class="request-dialog" id="requestDialog" aria-labelledby="dialogTitle">
+      <form id="requestForm">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">REQUEST DETAILS</p>
+            <h2 id="dialogTitle">New request</h2>
+          </div>
+          <button class="icon-button" id="closeDialogButton" type="button" aria-label="Close dialog">×</button>
+        </div>
+
+        <label class="form-field" for="titleInput">
+          <span>Title <em>Required</em></span>
+          <input id="titleInput" name="title" type="text" maxlength="120" placeholder="e.g. Wi-Fi keeps disconnecting" required>
+        </label>
+        <label class="form-field" for="descriptionInput">
+          <span>Description <em>Required</em></span>
+          <textarea id="descriptionInput" name="description" rows="4" placeholder="Add a few details about the issue" required></textarea>
+        </label>
+        <label class="form-field" for="requesterInput">
+          <span>Requester name <em>Required</em></span>
+          <input id="requesterInput" name="requesterName" type="text" maxlength="100" placeholder="Who needs help?" required>
+        </label>
+        <div class="form-row">
+          <label class="form-field" for="priorityInput">
+            <span>Priority</span>
+            <select id="priorityInput" name="priority">
+              <option value="Low">Low</option>
+              <option value="Medium" selected>Medium</option>
+              <option value="High">High</option>
+            </select>
+          </label>
+          <label class="form-field" for="statusInput">
+            <span>Status</span>
+            <select id="statusInput" name="status">
+              <option value="Open">Open</option>
+              <option value="In Progress">In progress</option>
+              <option value="Resolved">Resolved</option>
+            </select>
+          </label>
+        </div>
+        <div class="dialog-actions">
+          <button class="button button-secondary" id="cancelDialogButton" type="button">Cancel</button>
+          <button class="button button-primary" id="saveRequestButton" type="submit">Create request</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  </body>
+</html>

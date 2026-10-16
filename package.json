@@ -1,0 +1,19 @@
+{
+  "name": "service-request-api",
+  "version": "1.0.0",
+  "description": "A beginner-friendly REST API for managing service requests",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "rest-api"
+  ],
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  }
+}
